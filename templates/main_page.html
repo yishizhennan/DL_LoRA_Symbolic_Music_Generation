@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Music Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/abcjs@6.0.0/dist/abcjs-basic-min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Music Composer</h1>
+            <p class="subtitle">Transform your ideas into beautiful music with artificial intelligence</p>
+        </header>
+        
+        <div class="input-group">
+            <textarea id="prompt" placeholder="Describe the music you want to create... 
+(e.g., 'A joyful piano piece in C major, fast tempo, with a flowing melody')"></textarea>
+            <button id="generate-btn" class="generate-btn pulse">
+                <i class="fas fa-magic"></i> Generate Music
+            </button>
+            <div class="error" id="error-message"></div>
+        </div>
+        
+        <div class="status" id="status">
+            <!-- Status messages will appear here -->
+        </div>
+        
+        <div class="player-section">
+            <div class="player-header" id="player-header">
+                <h2><i class="fas fa-music"></i> Music Player</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="player-content" id="player-content">
+                <div class="player-controls">
+                    <div class="instrument-selector">
+                        <div class="instrument-btn active" data-instrument="piano">Piano</div>
+                        <div class="instrument-btn" data-instrument="guitar">Guitar</div>
+                        <div class="instrument-btn" data-instrument="violin">Violin</div>
+                        <div class="instrument-btn" data-instrument="flute">Flute</div>
+                        <div class="instrument-btn" data-instrument="trumpet">Trumpet</div>
+                    </div>
+                    
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="current-time">0:00</span>
+                        <span id="total-time">0:00</span>
+                    </div>
+                    
+                    <div class="control-buttons">
+                        <button class="control-btn" id="prev-btn">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="control-btn" id="play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="next-btn">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sheet-music">
+            <div class="sheet-header" id="sheet-header">
+                <h2><i class="fas fa-file-alt"></i> Sheet Music</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="sheet-content" id="sheet-content">
+                <div id="notation"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>AI Music Generator v1.0 | Generated music is for demonstration purposes only</p>
+        </div>
+    </div>
+<script src="{{ url_for('static', filename='main_script.js') }}"></script>
+</body>
+</html>
