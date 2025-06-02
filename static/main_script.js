@@ -296,7 +296,7 @@ if (typeof ABCJS === 'undefined') {
         // Remove Convert ABC button if exists
         const convertBtn = document.getElementById('convert-audio-btn');
         if (convertBtn) convertBtn.style.display = 'none';
-
+        // Download midi via API calls
         document.getElementById("download-midi-btn")?.addEventListener("click", async () => {
             try {
                 const res = await fetch("/download-midi", {
@@ -314,7 +314,18 @@ if (typeof ABCJS === 'undefined') {
                 alert("Error downloading MIDI: " + err.message);
             }
         });
+        // Old version: download midi via ABCJS
+        // This probably cannot be played on Windows
+        // document.getElementById("download-midi-btn")?.addEventListener("click", () => {
+        //     const midi = ABCJS.synth.getMidiFile(sample_abc, { midiOutputType: "binary" });
+        //     const blob = new Blob([midi], { type: "audio/midi" });
+        //     const a = document.createElement("a");
+        //     a.href = URL.createObjectURL(blob);
+        //     a.download = "generated_music.mid";
+        //     a.click();
+        // });
 
+        // Download PDF via SVG rendering
         document.getElementById("download-pdf-btn")?.addEventListener("click", () => {
             // Get svg element from ABCJS rendering
             const svgElement = document.querySelector("#notation svg");
