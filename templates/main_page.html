@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Music Generator</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/abcjs@6.0.0/dist/abcjs-basic-min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- abcjs with synth support -->
+    <script src="/static/abcjs_midi_6.0.0-beta.21-min.js"></script>
+
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -15,20 +23,17 @@
             <h1>AI Music Composer</h1>
             <p class="subtitle">Transform your ideas into beautiful music with artificial intelligence</p>
         </header>
-        
+
         <div class="input-group">
-            <textarea id="prompt" placeholder="Describe the music you want to create... 
-(e.g., 'A joyful piano piece in C major, fast tempo, with a flowing melody')"></textarea>
+            <textarea id="prompt" placeholder="Describe the music you want to create..."></textarea>
             <button id="generate-btn" class="generate-btn pulse">
                 <i class="fas fa-magic"></i> Generate Music
             </button>
             <div class="error" id="error-message"></div>
         </div>
-        
-        <div class="status" id="status">
-            <!-- Status messages will appear here -->
-        </div>
-        
+
+        <div class="status" id="status"></div>
+
         <div class="player-section">
             <div class="player-header" id="player-header">
                 <h2><i class="fas fa-music"></i> Music Player</h2>
@@ -43,7 +48,7 @@
                         <div class="instrument-btn" data-instrument="flute">Flute</div>
                         <div class="instrument-btn" data-instrument="trumpet">Trumpet</div>
                     </div>
-                    
+
                     <div class="progress-container" id="progress-container">
                         <div class="progress-bar" id="progress-bar"></div>
                     </div>
@@ -51,22 +56,39 @@
                         <span id="current-time">0:00</span>
                         <span id="total-time">0:00</span>
                     </div>
-                    
+
                     <div class="control-buttons">
-                        <button class="control-btn" id="prev-btn">
+                        <button class="control-btn" id="prev-btn" aria-labelledby="Previous Track">
                             <i class="fas fa-step-backward"></i>
                         </button>
-                        <button class="control-btn" id="play-btn">
+                        <button class="control-btn" id="play-btn" aria-labelledby="Play/Pause Track">
                             <i class="fas fa-play"></i>
                         </button>
-                        <button class="control-btn" id="next-btn">
+                        <button class="control-btn" id="next-btn" aria-labelledby="Next Track">
                             <i class="fas fa-step-forward"></i>
                         </button>
+                    </div>
+
+                    <!-- New buttons -->
+                    <div class="audio-actions">
+                        <button id="convert-audio-btn" class="audio-actions.control-btn">
+                            <i class="fas fa-wave-square"></i> Convert ABC to Audio
+                        </button>
+                        <button id="download-midi-btn" class="audio-actions.control-btn">
+                            <i class="fas fa-file-audio"></i> Download MIDI
+                        </button>
+                        <button id="download-pdf-btn" class="audio-actions.control-btn">
+                            <i class="fas fa-file-pdf"></i> Download PDF
+                        </button>
+                    </div>
+
+                    <div id="audio-warning" style="display: none; color: red; margin-top: 8px;">
+                        Cannot play music. Check the audio file or network connections.
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="sheet-music">
             <div class="sheet-header" id="sheet-header">
                 <h2><i class="fas fa-file-alt"></i> Sheet Music</h2>
@@ -76,11 +98,12 @@
                 <div id="notation"></div>
             </div>
         </div>
-        
+
         <div class="footer">
             <p>AI Music Generator v1.0 | Generated music is for demonstration purposes only</p>
         </div>
     </div>
-<script src="{{ url_for('static', filename='main_script.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='main_script.js') }}"></script>
 </body>
 </html>

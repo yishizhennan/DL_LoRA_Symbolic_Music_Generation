@@ -1,0 +1,11 @@
+X:1
+T:Sample Generated Music
+C:AI Composer
+V:"VIOLIN"
+M:4/4
+L:1/8
+Q:1/4=120
+K:C 
+|: "C" C2 E2 G2 c2 | "G7" B2 d2 G2 F2 | "C" C2 E2 G2 c2 | "F" A2 c2 F2 E2 :|
+| "C" C2 E2 G2 c2 | "Am" A2 c2 E2 A2 | "Dm" D2 F2 A2 d2 | "G7" G2 B2 d2 g2 |
+| "C" c2 e2 g2 c'2 |]
