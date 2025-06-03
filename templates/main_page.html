@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
     <!-- Your CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -26,6 +28,12 @@
 
         <div class="input-group">
             <textarea id="prompt" placeholder="Describe the music you want to create..."></textarea>
+            <div class="input-toolbar">
+                <button class="file-upload-btn" id="file-upload-btn">
+                <i class="fas fa-paperclip"></i>
+                <span class="tooltip">Upload music files (TXT, ABC, MIDI)</span>
+                </button>
+            </div>
             <button id="generate-btn" class="generate-btn pulse">
                 <i class="fas fa-magic"></i> Generate Music
             </button>
@@ -100,10 +108,42 @@
         </div>
 
         <div class="footer">
-            <p>AI Music Generator v1.0 | Generated music is for demonstration purposes only</p>
+            <p>AI Music Generator v1.0 </p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="file-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload Music Files</h2>
+                <button class="close-modal" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <p class="upload-text">Drag & drop your files here</p>
+                <p class="file-types">Supported formats: TXT, ABC, MIDI</p>
+                <input type="file" id="file-input" class="file-input" multiple accept=".txt,.abc,.mid,.midi">
+                <label for="file-input" class="file-label">
+                    <i class="fas fa-folder-open"></i> Select Files
+                </label>
+            </div>
+            
+            <div class="uploaded-files" id="uploaded-files">
+                <!-- Files will be listed here -->
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn btn-secondary" id="cancel-upload">Cancel</button>
+                <button class="modal-btn btn-primary" id="confirm-upload">Confirm</button>
+            </div>
         </div>
     </div>
 
     <script src="{{ url_for('static', filename='main_script.js') }}"></script>
 </body>
+
 </html>

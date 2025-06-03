@@ -28,8 +28,50 @@ def home():
 
 @app.route('/generate', methods=['POST'])
 def generate():
-    data = request.get_json() or {}
-    prompt = data.get('prompt', 'Generate a random piece of music')
+    prompt = request.form.get('prompt', 'Generate a random piece of music')
+    files = request.files.getlist('files')
+    print("Received prompt:", prompt)
+    print("Received files:", files)
+    abc_content = ""
+    # Process uploaded files if any, transform them into ABC format if necessary
+    if files:
+        for file in files:
+            if file and file.filename.endswith('.abc'):
+                # Save the uploaded ABC file
+                file_path = os.path.join('static', 'uploaded', file.filename)
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                file.save(file_path)
+                print(f"Saved uploaded ABC file: {file_path}")
+                with open(file_path, 'r') as f:
+                    abc_content = f.read()
+                    print("Content of uploaded ABC file:", abc_content)
+            elif file and file.filename.endswith('.mid'):
+                # Save the uploaded MIDI file
+                file_path = os.path.join('static', 'uploaded', file.filename)
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                file.save(file_path)
+                print(f"Saved uploaded MIDI file: {file_path}")
+                # use midi2abc to convert MIDI to ABC
+                if shutil.which('midi2abc'):
+                    result = subprocess.run(['midi2abc', file_path], capture_output=True, text=True)
+                    if result.returncode == 0:
+                        abc_content = result.stdout
+                        print("Converted MIDI to ABC content:", abc_content)
+                        # Save the converted ABC content
+                        abc_file_path = file_path.replace('.mid', '.abc')
+                        with open(abc_file_path, 'w') as abc_file:
+                            abc_file.write(abc_content)
+                            print(f"Saved converted ABC file: {abc_file_path}")
+                    else:
+                        print("Error converting MIDI to ABC:", result.stderr)
+                else:
+                    print("midi2abc command not found. Please install midi2abc.")
+            elif file and file.filename.endswith('.txt'):
+                # Save the uploaded text file
+                file_path = os.path.join('static', 'uploaded', file.filename)
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                file.save(file_path)
+                print(f"Saved uploaded text file: {file_path}")
     # Simulate music generation with a delay
     time.sleep(2)
     # Simulate occasional errors
@@ -37,11 +79,16 @@ def generate():
         return Response("Model failed to generate music. Please try again with a different prompt.", status=500)
 
     # Simulate generation
+    prompt_processed = prompt + '\nUploaded file content: \n' + abc_content if abc_content else prompt
+    """
+    TODO: Add actual music generation logic here.
+    We assume that the model generates a piece of music in ABC format, either a file or a string.
+    """
     # Outputting strings suffices
-    with open("static/generated/test_abc.txt", "r") as file:
+    with open("static/generated/demo.abc", "r") as file:
         generated_music = file.read()
+    if "Generate" in prompt or "generate" in prompt_processed:
         print("Generated music:", generated_music)
-    if "Generate" in prompt or "generate" in prompt:
         return Response(generated_music, mimetype='text/plain')
     else:
         return Response(sample_abc, mimetype='text/plain')
