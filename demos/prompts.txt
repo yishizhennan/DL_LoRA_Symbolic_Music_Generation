@@ -1,0 +1,6 @@
+prompt1: Design melodic orchestrations by following the indicated chord progression.
+'A', 'D', 'E7', 'A', 'E/G#', 'A', 'Bm', 'A7/C#', 'D', 'E7', 'A', 'A', 'D', 'A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'A/D#', 'E', 'A', 'D', 'A', 'A', 'D', 'A', 'E7' </s>
+prompt2: Craft a musical creation that channels the spirit of Bach's compositions. </s>
+prompt3: Design a song that reflects the artistic essence of Bach. </s>
+prompt4: Develop a trumpet creation that emulates the style of the Peruvian song El Condor Pasa.  </s>
+prompt5: Craft a piano creation that captures the revolutionary spirit of the Internationale.  </s>

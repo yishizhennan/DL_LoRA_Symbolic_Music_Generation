@@ -26,6 +26,27 @@
             <p class="subtitle">Transform your ideas into beautiful music with artificial intelligence</p>
         </header>
 
+        <!-- 新增：模型和lora选择 -->
+        <div class="select-group" style="display: flex; gap: 16px; margin-bottom: 12px;">
+            <div>
+                <label for="model-select">Model:</label>
+                <select id="model-select" name="model">
+                    {% for model in model_list %}
+                        <option value="{{ model }}">{{ model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="lora-select">Lora:</label>
+                <select id="lora-select" name="lora">
+                    {% for lora in lora_list %}
+                        <option value="{{ lora }}">{{ lora }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <!-- 结束新增 -->
+
         <div class="input-group">
             <textarea id="prompt" placeholder="Describe the music you want to create..."></textarea>
             <div class="input-toolbar">
@@ -144,6 +165,24 @@
     </div>
 
     <script src="{{ url_for('static', filename='main_script.js') }}"></script>
+    <script>
+document.getElementById('model-select').addEventListener('change', function() {
+    fetch('/set-model', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({model: this.value}),
+        credentials: 'same-origin'
+    });
+});
+document.getElementById('lora-select').addEventListener('change', function() {
+    fetch('/set-lora', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lora: this.value}),
+        credentials: 'same-origin'
+    });
+});
+</script>
 </body>
 
 </html>
