@@ -2,7 +2,7 @@
 
 ## Course Project for Deep Learning
 
-This is a platform for testing the performances of different LORA models on symbolic music generation. It supports text to ABC format, as well as MIDI music to ABC format music generation.
+This is a platform for testing the performance of different LORA models on symbolic music generation. It supports text to ABC format, as well as MIDI music to ABC format music generation.
 We provide code for our base model, data processing tools, as well as our frontend interface.
 
 ## Requirements
